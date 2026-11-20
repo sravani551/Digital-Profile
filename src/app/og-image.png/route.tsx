@@ -37,7 +37,7 @@ export async function GET() {
           >
             SN
           </div>
-          <span style={{ fontSize: 24, color: "#94a3b8" }}>{personalInfo.siteUrl.replace("https://", "")}</span>
+          <span style={{ fontSize: 24, color: "#94a3b8" }}>{personalInfo.github.replace("https://", "")}</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span style={{ fontSize: 84, fontWeight: 700, letterSpacing: "-0.03em" }}>{personalInfo.name}</span>

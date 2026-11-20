@@ -14,7 +14,12 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/sravani-n-417s987",
   github: "https://github.com/sravani551",
   email: "sravaninimmisetty1@gmail.com",
-  siteUrl: "https://www.intelliforge.tech",
+  // Public URL of this site: set NEXT_PUBLIC_SITE_URL, otherwise Vercel's production URL is used
+  siteUrl:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
 };
 
 export const focusAreas = [
