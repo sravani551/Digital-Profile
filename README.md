@@ -5,8 +5,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38BDF8)
 
-My personal portfolio: an interactive resume with an experience timeline, a skills graph and an
-AI assistant that answers questions about my background.
+My personal portfolio: experience, open-source projects and skills, plus an AI assistant that
+answers questions about my background.
 
 ## Highlights
 
@@ -18,7 +18,9 @@ AI assistant that answers questions about my background.
 - **Single source of truth**: all content lives in `src/data/resume-data.ts`; the UI and the
   assistant both read from it
 - **Dynamic Open Graph image** generated at `/og-image.png` for link previews
-- Animations with Framer Motion; icons from Lucide
+- **Fast and accessible**: content is server-rendered (no JavaScript needed to read it), self-hosted
+  Geist font, skip link, keyboard-friendly chat (Esc to close), reduced-motion support, ~90 kB first load
+- **SEO**: Open Graph image, canonical URL and `Person` structured data (JSON-LD)
 
 ## Project structure
 
@@ -28,8 +30,8 @@ src/
     page.tsx              landing page
     api/chat/route.ts     AI assistant endpoint
     og-image.png/route.tsx  generated social preview image
-  components/             Hero, Experience timeline, Skills graph, Chat widget, Navigation
-  data/resume-data.ts     profile, experience, skills, certifications
+  components/             Hero, Experience, Projects, Skills, Contact, Navigation, AI chat widget
+  data/resume-data.ts     profile, experience, projects, skills, education, certifications
 ```
 
 ## Run locally

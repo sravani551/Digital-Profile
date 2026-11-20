@@ -1,57 +1,70 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { personalInfo } from '@/data/resume-data';
-import Navigation from '@/components/Navigation';
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import "./globals.css";
+import { personalInfo, skillCategories } from "@/data/resume-data";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+
+const title = `${personalInfo.name} | ${personalInfo.title}`;
 
 export const metadata: Metadata = {
-  title: `${personalInfo.name} | ${personalInfo.title} Portfolio`,
+  metadataBase: new URL(personalInfo.siteUrl),
+  title,
   description: personalInfo.summary,
-  keywords: ['Java', 'Spring Boot', 'React', 'Angular', 'Full Stack Developer', 'IntelliForge AI', 'Portfolio'],
+  keywords: ["Java", "Spring Boot", "Microservices", "Kafka", "Angular", "React", "Full Stack Developer", "Portfolio"],
   authors: [{ name: personalInfo.name, url: personalInfo.linkedin }],
-  metadataBase: new URL('https://www.intelliforge.tech'),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: `${personalInfo.name} | ${personalInfo.title} Portfolio`,
-    description: personalInfo.summary,
-    url: 'https://www.intelliforge.tech',
-    siteName: `${personalInfo.name} Portfolio`,
-    images: [
-      {
-        url: '/api/og',
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
+    title,
+    description: personalInfo.headline,
+    url: "/",
+    siteName: `${personalInfo.name} | Portfolio`,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: title }],
+    locale: "en_US",
+    type: "profile",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: `${personalInfo.name} | ${personalInfo.title} Portfolio`,
-    description: personalInfo.summary,
-    images: ['/api/og'],
-  },
-  alternates: {
-    canonical: 'https://www.intelliforge.tech',
+    card: "summary_large_image",
+    title,
+    description: personalInfo.headline,
+    images: ["/og-image.png"],
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#07090e",
+};
+
+// Structured data so search engines understand who this page is about
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: personalInfo.name,
+  jobTitle: personalInfo.title,
+  url: personalInfo.siteUrl,
+  email: `mailto:${personalInfo.email}`,
+  sameAs: [personalInfo.linkedin, personalInfo.github],
+  knowsAbout: skillCategories.flatMap((c) => c.skills).slice(0, 20),
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="antialiased min-h-screen flex flex-col">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="min-h-screen">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-ink-950"
+        >
+          Skip to content
+        </a>
         <Navigation />
-        <main className="flex-grow pt-20">
-          {children}
-        </main>
-        <footer className="py-8 text-center text-sm text-gray-500 border-t border-neural-border mt-10">
-          <p>
-            &copy; {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
-          </p>
-        </footer>
+        <main id="main">{children}</main>
+        <Footer />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </body>
     </html>
   );

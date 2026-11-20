@@ -3,59 +3,71 @@
 @tailwind utilities;
 
 :root {
-  --background: #030014;
-  --foreground: #ffffff;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+  @apply bg-ink-950 text-slate-300 font-sans antialiased;
 }
 
-/* Custom Utilities for Neural Theme */
-.glow-cyan {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.2);
+::selection {
+  @apply bg-accent/30 text-white;
 }
 
-.glow-purple {
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(124, 58, 237, 0.2);
+@layer components {
+  .section {
+    @apply mx-auto w-full max-w-page px-6 py-24 sm:py-28;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-accent;
+  }
+
+  .heading {
+    @apply mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/[0.06] bg-ink-900/70 transition-colors duration-200;
+  }
+
+  .card-hover {
+    @apply hover:border-accent/30 hover:bg-ink-800/80;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-md border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-slate-300;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-ink-950 transition-colors hover:bg-accent-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white/20 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
 }
 
-.glass-card {
-  background: rgba(15, 15, 35, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+/* Soft light at the top of the page; static, no animation cost */
+.hero-glow {
+  background:
+    radial-gradient(60rem 30rem at 15% -10%, rgba(56, 189, 248, 0.12), transparent 60%),
+    radial-gradient(40rem 24rem at 90% 0%, rgba(139, 92, 246, 0.10), transparent 60%);
 }
 
-.glass-card:hover {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 212, 255, 0.1);
-}
-
-.gradient-text {
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gradient-primary {
-  background-image: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
-}
-
-.gradient-secondary {
-  background-image: linear-gradient(135deg, #34d399 0%, #00d4ff 100%);
-}
-
-/* Neural Network Background */
-.bg-neural {
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

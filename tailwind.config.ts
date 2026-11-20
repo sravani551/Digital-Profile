@@ -1,28 +1,33 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
-        neural: {
-          bg: "#030014",
-          surface: "#0f0f23",
-          card: "#1a1a2e",
-          border: "#16213e",
-          cyan: "#00d4ff",
-          purple: "#7c3aed",
-          pink: "#f472b6",
-          green: "#34d399",
-          amber: "#fbbf24",
-        }
+        ink: {
+          950: "#07090e",
+          900: "#0b0e15",
+          800: "#11151f",
+          700: "#1a2030",
+          600: "#283043",
+        },
+        accent: {
+          DEFAULT: "#38bdf8",
+          soft: "#7dd3fc",
+          deep: "#0ea5e9",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
+      maxWidth: {
+        page: "72rem",
       },
     },
   },
   plugins: [],
 };
+
 export default config;

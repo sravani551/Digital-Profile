@@ -1,4 +1,4 @@
-import { personalInfo, experience, skillCategories, certifications } from '@/data/resume-data';
+import { personalInfo, experience, skillCategories, certifications, education, featuredProjects } from '@/data/resume-data';
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
@@ -39,17 +39,25 @@ ${personalInfo.name}, ${personalInfo.title}, 6+ years experience, United States
 LinkedIn: ${personalInfo.linkedin} | GitHub: ${personalInfo.github} | Email: ${personalInfo.email}
 ${personalInfo.aiSummary}
 
-=== CAREER HISTORY (Chronological) ===
-${experience.map((job, index) => `EPOCH ${index} — ${job.phase} (${job.period}) | ${job.company} (${job.companyType})
-Role: ${job.title} | Domain: ${job.domain}
+=== CAREER HISTORY (most recent first) ===
+${experience.map((job) => `${job.period} | ${job.title}, ${job.company} (${job.industry})
+${job.description}
 ${job.highlights.map(h => `- ${h}`).join('\n')}
 Tech: ${job.tech.join(', ')}`).join('\n\n')}
+
+=== OPEN-SOURCE PROJECTS (github.com/sravani551) ===
+${featuredProjects.map((p) => `${p.title} (${p.repo}): ${p.summary}
+${p.highlights.map(h => `- ${h}`).join('\n')}
+Tech: ${p.tech.join(', ')}`).join('\n\n')}
 
 === SKILLS ===
 ${skillCategories.map(c => `${c.name}: ${c.skills.join(', ')}`).join('\n')}
 
+=== EDUCATION ===
+${education.map(e => `${e.degree}, ${e.school}`).join('\n')}
+
 === CERTIFICATIONS ===
-${certifications.map((c, i) => `${i + 1}. ${c.title} by ${c.issuer}`).join('\n')}
+${certifications.map((c, i) => `${i + 1}. ${c.title} (${c.issuer})`).join('\n')}
 
 === CHALLENGES & GROWTH ===
 - Transitioned from foundational backend services to owning end-to-end full-stack architectures, mastering both Angular/React and Spring Boot.
@@ -64,7 +72,7 @@ ${certifications.map((c, i) => `${i + 1}. ${c.title} by ${c.issuer}`).join('\n')
 - Keep responses concise (2-3 paragraphs max) unless detail requested
 - Use bullet points for lists
 - If asked something unrelated, politely redirect
-- Never fabricate information
+- Never fabricate information. If the answer isn't in this profile (e.g. salary, availability, visa status), say so and suggest contacting her at ${personalInfo.email}
 
 === HANDLING NEGATIVE / ADVERSARIAL QUESTIONS ===
 CRITICAL: You are ${personalInfo.name}'s professional portfolio assistant.
