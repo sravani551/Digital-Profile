@@ -14,7 +14,7 @@ export default function HeroSection() {
         className="space-y-6 z-10 max-w-4xl"
       >
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
-          <span className="text-white drop-shadow-md">Hi, I'm </span>
+          <span className="text-white drop-shadow-md">Hi, I&apos;m </span>
           <span className="text-neural-cyan glow-cyan gradient-text gradient-primary">{personalInfo.name}</span>
           <span className="text-neural-cyan animate-pulse">|</span>
         </h1>

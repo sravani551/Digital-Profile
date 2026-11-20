@@ -1,7 +1,9 @@
-.vercel
 node_modules
 .next
+.vercel
 .env*
+!.env.example
 .DS_Store
 .agents
 .cursor
+*.tsbuildinfo
