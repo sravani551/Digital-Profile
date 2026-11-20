@@ -1,8 +1,33 @@
 import { personalInfo, experience, skillCategories, certifications } from '@/data/resume-data';
 
+type ChatMessage = { role: 'user' | 'assistant'; content: string };
+
+const MAX_MESSAGES = 12;
+const MAX_CHARS = 2000;
+
+/**
+ * This endpoint is public and spends a paid API key, so only accept what the widget sends:
+ * the last few user/assistant turns, each length-capped. Client-supplied "system" messages
+ * are dropped so visitors can't override the assistant's instructions.
+ */
+function sanitizeMessages(input: unknown): ChatMessage[] {
+  if (!Array.isArray(input)) return [];
+  return input
+    .filter((m): m is ChatMessage =>
+      typeof m === 'object' && m !== null &&
+      (m.role === 'user' || m.role === 'assistant') &&
+      typeof m.content === 'string' && m.content.trim().length > 0)
+    .slice(-MAX_MESSAGES)
+    .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_CHARS) }));
+}
+
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const body = await req.json().catch(() => null);
+    const messages = sanitizeMessages(body?.messages);
+    if (messages.length === 0) {
+      return Response.json({ error: 'messages must be a non-empty array' }, { status: 400 });
+    }
     
     const systemPrompt = `You are the AI assistant embedded in ${personalInfo.name}'s interactive portfolio resume.
 You answer questions about their career, skills, projects, and experience.
